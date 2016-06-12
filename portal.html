@@ -122,10 +122,10 @@
 
     <!-- User Scripts -->
     <script type="text/javascript">
+        
+        
+
         // Firebase Garbage
-        var randomImage = 1 + Math.floor(Math.random() * 6);    
-        var imgName = "plant" + randomImage+".png";
-        $("#current-plant").attr("src",imgName);
         var config = {
           apiKey: "AIzaSyC6MYsa-5z1bnFoE2xufHP8NLTb1rPk618",
           authDomain: "h2o-grow.firebaseapp.com",
@@ -133,46 +133,67 @@
           storageBucket: "h2o-grow.appspot.com",
         };
         firebase.initializeApp(config);
-
-        var ref 
+        function logOutButtonClick(){
+            console.log("button")
+            firebase.auth().signOut()
+        }
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
             // User is signed in.
-                ref = firebase.database().ref('users/' + userId)
+                var randomImage = 1 + Math.floor(Math.random() * 6);    
+                var imgName = "plant" + randomImage+".png";
+                $("#current-plant").attr("src",imgName);
+
+
+                
+                function addListElement(text, description){
+                    var doc = $(document)
+                    var button = "<div class='btn-group pull-right'><button class='complete btn btn-success'>Complete</button></div>";
+                    doc.find('.list_of_items').append("<li class='list-group-item'>" + "<div class='text_holder'>" + "Hello" + button + "</div></li>");
+                }
+                function loadAllEvents(){
+                    var fireref = firebase.database().ref(user.uid+'/daily');
+                    commentsRef.on('child_added', function(data) {
+                        addCommentElement(postElement, data.key, data.val().text, data.val().author);
+                    });
+
+
+                }
+                function eventComplete(){
+
+                }
+
+                $(document).ready(function(){
+                    addListElement("hello", "konichiwa")
+                    // $("form#main_input_box").submit(function(event){
+                    //     event.preventDefault();
+                    //     var button = "<div class='btn-group pull-right'><button class='complete btn btn-success'>Complete</button></div>";
+                    //     $(".list_of_items").append("<li class='list-group-item'>" + "<div class='text_holder'>" + $("#custom_textbox").val() + button + "</div></li>");
+                    //     $("#custom_textbox").val('');
+                    // });
+
+
+                    $(".list_of_items").on("click", "button.complete", function (){
+                        var eventnum = 1
+                       
+                        $(this).closest("li").remove();
+                        firebase.database().ref().child('user').child(user.uid+'').child('complete').update('true')
+
+                        firebase.database().ref().child('user').child(user.uid+'').child('event').child('daily').child(eventnum+'')
+                        onEventComplete()
+                        
+                        // Change to completed in Firebase
+                        // Call event handler for experience
+                        // Delete in list
+                    });
+                });
             
             } else {
                 window.location.replace("index.html")
             // No user is signed in.
             }
         });
-        function logOutButtonClick(){
-            console.log("button")
-            firebase.auth().signOut()
-        }
-        function addListElement(text, description){
-
-        }
-        $(document).ready(function(){
-
-
-
-            $("form#main_input_box").submit(function(event){
-                event.preventDefault();
-                var twoButtons = "<div class='btn-group pull-right'><button class='complete btn btn-success'>Complete</button></div>";
-                $(".list_of_items").append("<li class='list-group-item'>" + "<div class='text_holder'>" + $("#custom_textbox").val() + twoButtons + "</div></li>");
-                $("#custom_textbox").val('');
-            });
-
-            $(".list_of_items").on("click", "button.complete", function (){
-                var editItemBox = "<form class='edit_input_box'><input type='text' class='itembox'></form>";
-                var twoButtons = "<div class='btn-group pull-right' id='buttonGroup'><button class='complete btn btn-success'>Edit</button></div>";
-                $(this).closest("div.text_holder").replaceWith(editItemBox);
-                $("form.edit_input_box ").on("submit", function(){
-                    event.preventDefault(); 
-                    $(this).replaceWith("<div>" + $(".itembox").val() + twoButtons + "</div>");
-                }); 
-            });
-        });
+        
 
     </script>
 
