@@ -208,6 +208,16 @@
                 // ...
             });
         }
+
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+            // User is signed in.
+            window.location.replace("portal.html")
+            } else {
+            // No user is signed in.
+            }
+        });
         // End Firebase Garbage
 
         // Login/Register Modal Garbage
@@ -227,7 +237,7 @@
                     console.log("before firebase")
                     firebase.auth().signInWithEmailAndPassword($lg_email, $lg_password).catch(function(error) {
                         console.log("all up in dat firebase")
-                        
+
                         var errorCode = error.code;
                         var errorMessage = error.message;
                         console.log(errorMessage)
