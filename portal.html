@@ -82,13 +82,13 @@
             </div>
         </div>
         <div class="progress">
-            <div class="progress-bar progress-bar-info" id = "expbar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuema"100" style="width: 60%;">
+            <div class="progress-bar progress-bar-info" id = "expbar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuema"100">
             </div>
         </div>
     </div>
 
     <div class="container text-center" id="main">
-        <h1 class="text-center">Water Conservation Tasks</h1>
+        <h1 class="text-center" id = "smaller-font">Water Conservation Tasks</h1>
 
         <form>  
             <ol class="list-group list_of_items"></ol>
@@ -96,7 +96,7 @@
     </div>
 
     <div class="container" id="plant">
-        <h1>Plant</h1>
+        <h1 id = "smaller-font">Plant</h1>
             <img class ="plant-img" id="current-plant">
         </form>
 
@@ -117,7 +117,8 @@
     <script type="text/javascript">
         
         
-
+        var experience = 0;
+        var level = 0;
         // Firebase Garbage
         var config = {
           apiKey: "AIzaSyC6MYsa-5z1bnFoE2xufHP8NLTb1rPk618",
@@ -135,6 +136,7 @@
             // User is signed in.
                 var randomImage = 1 + Math.floor(Math.random() * 6);    
                 var imgName = "plant" + randomImage+".png";
+                
                 $("#current-plant").attr("src",imgName);
 
 
@@ -154,8 +156,15 @@
 
 
                 }
-                function eventComplete(){
-
+                function onEventComplete(){
+                    if(experience == 100){ 
+                        experience = 0; 
+                        level++;
+                    }
+                   else 
+                        experience += 20; 
+                    var expPercent = "width: " + experience + "%";
+                    $("#expbar").attr("style", expPercent)
                 }
 
                 $(document).ready(function(){
