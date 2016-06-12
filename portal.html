@@ -188,7 +188,6 @@
                         var deleted = $(this).closest("li")
                         key = deleted.attr('key')
                         deleted.remove();
-                        experience += 20
                         console.log(experience)
                         firebase.database().ref().child('users/' + user.uid).update({
                             exp: experience
