@@ -145,3 +145,10 @@
 .form-control {
   border-radius: 0px;
 }
+
+#img_logo {
+    position: absolute;
+    left: 70px;
+    top: 8px;
+}
+
