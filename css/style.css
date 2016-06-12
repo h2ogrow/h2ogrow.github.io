@@ -1,4 +1,4 @@
-   
+
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 
 * {
@@ -220,4 +220,8 @@ body {
 
 #smaller-font {
     font-size: 25px;
+}
+.plant-image{
+
+    text-align: center;
 }
