@@ -103,9 +103,9 @@
                                 <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
                                 <span id="text-register-msg">Register an account.</span>
                             </div>
-                            <input id="register_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
-                            <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
-                            <input id="register_password" class="form-control" type="password" placeholder="Password" required>
+                            <input id="register_email" class="form-control" type="text" placeholder="Email" required>
+                            <input id="register_password" class="form-control" type="text" placeholder="Password" required>
+                            <input id="register_repassword" class="form-control" type="password" placeholder="Retype Password" required>
                         </div>
                         <div class="modal-footer">
                             <div>
@@ -182,7 +182,10 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+    <!-- User Scripts -->
     <script type="text/javascript">
         // Firebase Garbage
         var config = {
@@ -194,7 +197,14 @@
         firebase.initializeApp(config);
 
         function createUser(email, password){
-            
+            firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error){
+                var errorCode = error.code;
+                var errorMessage = error.message;
+            })
+        }
+
+        function loginUser(email, password){
+
         }
         // End Firebase Garbage
 
@@ -229,10 +239,10 @@
                     return false;
                     break;
                 case "register-form":
-                    var $rg_username=$('#register_username').val();
                     var $rg_email=$('#register_email').val();
                     var $rg_password=$('#register_password').val();
-                    if ($rg_username == "ERROR") {
+                    var $rg_repassword=$('#register_repassword').val();
+                    if ($rg_email == "ERROR") {
                         msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "error", "glyphicon-remove", "Register error");
                     } else {
                         msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "success", "glyphicon-ok", "Register OK");
