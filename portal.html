@@ -147,7 +147,7 @@
                     var level = Math.floor(experience/100)+1
                     var expercent = 'width: ' + expnum + "%"
                     $('#expbar').attr('style', expercent)
-                    $('div#expbar').text((100-expnum) + " exp to lvl " + (level))
+                    $('div#expbar').text((100-expnum) + " exp to lvl " + (level+1))
                     var imgName = "plant" + level +".png";
                     $("#current-plant").attr("src",imgName);
                 }
