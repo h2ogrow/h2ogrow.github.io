@@ -55,7 +55,7 @@
                                 <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
                                 <span id="text-login-msg">Type your username and password.</span>
                             </div>
-                            <input id="login_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
+                            <input id="login_email" class="form-control" type="text" placeholder="Email" required>
                             <input id="login_password" class="form-control" type="password" placeholder="Password" required>
                             <div class="checkbox">
                                 <label>
@@ -80,9 +80,9 @@
                         <div class="modal-body">
                             <div id="div-lost-msg">
                                 <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
-                                <span id="text-lost-msg">Type your e-mail.</span>
+                                <span id="text-lost-msg">Type your email.</span>
                             </div>
-                            <input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
+                            <input id="lost_email" class="form-control" type="text" placeholder="Email" required>
                         </div>
                         <div class="modal-footer">
                             <div>
@@ -104,8 +104,8 @@
                                 <span id="text-register-msg">Register an account.</span>
                             </div>
                             <input id="register_email" class="form-control" type="text" placeholder="Email" required>
-                            <input id="register_password" class="form-control" type="text" placeholder="Password" required>
-                            <input id="register_repassword" class="form-control" type="password" placeholder="Retype Password" required>
+                            <input id="register_password" class="form-control" type="password" placeholder="Password" required>
+                            <input id="register_repassword" class="form-control" type="password" placeholder="Confirm password" required>
                         </div>
                         <div class="modal-footer">
                             <div>
@@ -196,7 +196,7 @@
         };
         firebase.initializeApp(config);
 
-        function createUser(email, password){
+        function createUser(email, password, password2){
             firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error){
                 var errorCode = error.code;
                 var errorMessage = error.message;
@@ -204,7 +204,12 @@
         }
 
         function loginUser(email, password){
-
+            firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ...
+            });
         }
         // End Firebase Garbage
 
@@ -220,13 +225,22 @@
         $("form").submit(function () {
             switch(this.id) {
                 case "login-form":
-                    var $lg_username=$('#login_username').val();
+                    var $lg_email=$('#login_email').val();
                     var $lg_password=$('#login_password').val();
-                    if ($lg_username == "ERROR") {
-                        msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", "Login error");
-                    } else {
-                        msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "success", "glyphicon-ok", "Login OK");
-                    }
+
+                    firebase.auth().signInWithEmailAndPassword($lg_email, $lg_password).catch(function(error) {
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+
+                        if (errorMessage) {
+                            msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", errorMessage);
+                        } else {
+                            msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "success", "glyphicon-ok", "Login OK");
+                            $('#login-modal').modal('hide')
+                        }
+                    })
+
+                    
                     return false;
                     break;
                 case "lost-form":
@@ -242,6 +256,25 @@
                     var $rg_email=$('#register_email').val();
                     var $rg_password=$('#register_password').val();
                     var $rg_repassword=$('#register_repassword').val();
+
+                    if($rg_password == $rg_repassword){
+                        firebase.auth().createUserWithEmailAndPassword($rg_email, $rg_password).catch(function(error){
+                                var errorCode = error.code;
+                                var errorMessage = error.message;
+                                console.log(errorCode)
+                                console.log(errorMessage)
+                                if (errorMessage) {
+                                    msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "error", "glyphicon-remove", errorMessage);
+                                } else {
+                                    msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "success", "glyphicon-ok", "Register OK");
+                                }
+                            }
+                        )
+                    }else{
+                        msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "error", "glyphicon-remove", "Passwords are not matching");
+                    }
+                    
+
                     if ($rg_email == "ERROR") {
                         msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "error", "glyphicon-remove", "Register error");
                     } else {
