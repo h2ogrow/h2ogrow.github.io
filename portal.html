@@ -92,6 +92,15 @@
 
     </div>
 
+    <div class="container" id="plant">
+        <h1>Plant</h1>
+            <img class ="plant-img" id="current-plant">
+        </form>
+
+
+
+    </div>
+
     <!-- jQuery Version 1.11.1 -->
     <script src="js/jquery.js"></script>
 
@@ -104,6 +113,9 @@
     <!-- User Scripts -->
     <script type="text/javascript">
         // Firebase Garbage
+        var randomImage = 1 + Math.floor(Math.random() * 6);    
+        var imgName = "plant" + randomImage+".png";
+        $("#current-plant").attr("src",imgName);
         var config = {
           apiKey: "AIzaSyC6MYsa-5z1bnFoE2xufHP8NLTb1rPk618",
           authDomain: "h2o-grow.firebaseapp.com",
