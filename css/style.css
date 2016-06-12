@@ -166,13 +166,18 @@ body {
     word-wrap: break-word;
 }
 #main {
+<<<<<<< HEAD
     margin-top: 50px;
     margin-left:100px;
     margin-right:25px;
+=======
+    margin-top: 25px;
+>>>>>>> origin/master
     background-color: #ffffff;
     border-radius: 5px;
     width: 50%;
     border: 1px solid #545454;
+<<<<<<< HEAD
     display:inline-block;
 }
 #plant {
@@ -183,6 +188,9 @@ body {
     width: 30%;
     border: 1px solid #545454;
     display:inline-block;
+=======
+    float:;
+>>>>>>> origin/master
 }
 #img_logo {
     display:block;
@@ -193,5 +201,15 @@ body {
 }
 .navbar-brand {
     display:block;
+}
+#progress {
+    margin-top: 50px;
+    background-color: #ffffff;
+    width: 100%;
+    border-right:none;
+    border-left: none;
+}
+.progress {
+    margin-top: 20px;
 }
 
