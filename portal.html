@@ -171,20 +171,7 @@
 
 
                 }
-                function onEventComplete(){
-<<<<<<< HEAD
-                    if(experience == 100){ 
-                        experience = 0; 
-                        level++;
-                    }
-                   else 
-                        experience += 20; 
-                    var expPercent = "width: " + experience + "%";
-                    $("#expbar").attr("style", expPercent)
-=======
-                    console.log("just ran")
->>>>>>> origin/master
-                }
+
 
                 $(document).ready(function(){
                     loadAllEvents()
@@ -211,7 +198,6 @@
                         firebase.database().ref().child('users/' + user.uid + '/daily/' + key +'/exp').on('value', function(snapshot){
                             animateExperience(experience+snapshot.val())
                         })
-                        onEventComplete()
                         
                         // Change to completed in Firebase
                         // Call event handler for experience
