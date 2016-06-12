@@ -146,7 +146,7 @@
                 function animateExperience(num){
                     experience = num
                     var expnum = experience%100
-                    var level = Math.floor(experience/100) + 1
+                    var level = Math.floor(experience/100)
                     var expercent = 'width: ' + expnum + "%"
                     $('#expbar').attr('style', expercent)
                     $('div#expbar').text((100-expnum) + " exp to lvl " + (level+1))
