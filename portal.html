@@ -109,6 +109,8 @@
     <!-- jQuery Version 1.11.1 -->
     <script src="js/jquery.js"></script>
 
+    <script src="https://raw.githubusercontent.com/HubSpot/tether/master/dist/js/tether.min.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
@@ -154,7 +156,7 @@
                 
                 function addListElement(key, text, description){
                     var doc = $(document)
-                    var button = "<div class='btn-group pull-right'><button class='complete btn btn-success' data-toggle='tooltip' title='" + description + "'>Complete</button></div>";
+                    var button = "<div class='btn-group pull-right'><button class='complete btn btn-success' data-toggle='tooltip' data-placement='top' title='" + description + "'>Complete</button></div>";
                     doc.find('.list_of_items').append("<li class='list-group-item' key='" + key + "'>" + "<div class='text_holder'>" + text + button + "</div></li>");
                 }
                 function loadAllEvents(){
