@@ -97,8 +97,9 @@
     </div>
 
     <div class="container" id="plant">
-        <h1 id = "smaller-font">Plant</h1>
-            <img class ="plant-img" id="current-plant">
+        <p class = "plant-img">
+            <img id="current-plant">
+        </p>
         </form>
 
 
@@ -134,10 +135,6 @@
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
             // User is signed in.
-                var randomImage = 1 + Math.floor(Math.random() * 6);    
-                var imgName = "plant" + randomImage+".png";
-                
-                $("#current-plant").attr("src",imgName);
 
                 var expref = firebase.database().ref('users/' + user.uid + '/exp')
                 expref.on('value', function(snapshot){
@@ -147,11 +144,12 @@
                 function animateExperience(num){
                     experience = num
                     var expnum = experience%100
-                    var level = Math.floor(experience/100)
+                    var level = Math.floor(experience/100)+1
                     var expercent = 'width: ' + expnum + "%"
                     $('#expbar').attr('style', expercent)
                     $('div#expbar').text((100-expnum) + " exp to lvl " + (level+1))
-           
+                    var imgName = "plant" + level +".png";
+                    $("#current-plant").attr("src",imgName);
                 }
                 
                 function addListElement(key, text, description){
