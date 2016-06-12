@@ -89,12 +89,7 @@
 
     <div class="container text-center" id="main">
         <h1 class="text-center">Water Conservation Tasks</h1>
-        <form role ="form" id="main_input_box">
-            <label>
-                <input type="text" class ="form-control" id="custom_textbox" name="Item" placeholder="What do you need to do?">
-                <input type="submit" value="Add" class="btn btn-primary add_button">
-            </label>
-        </form>
+
         <form>  
             <ol class="list-group list_of_items"></ol>
         </form>
@@ -124,13 +119,6 @@
         
 
         // Firebase Garbage
-<<<<<<< HEAD
-        var percent = 0;
-        var randomImage = 1 + Math.floor(Math.random() * 6);    
-        var imgName = "plant" + randomImage+".png";
-        $("#current-plant").attr("src",imgName);
-=======
->>>>>>> origin/master
         var config = {
           apiKey: "AIzaSyC6MYsa-5z1bnFoE2xufHP8NLTb1rPk618",
           authDomain: "h2o-grow.firebaseapp.com",
@@ -151,15 +139,17 @@
 
 
                 
-                function addListElement(text, description){
+                function addListElement(key, text, description){
                     var doc = $(document)
                     var button = "<div class='btn-group pull-right'><button class='complete btn btn-success'>Complete</button></div>";
-                    doc.find('.list_of_items').append("<li class='list-group-item'>" + "<div class='text_holder'>" + "Hello" + button + "</div></li>");
+                    doc.find('.list_of_items').append("<li class='list-group-item'>" + "<div class='text_holder' key='" + key + "'>" + text + button + "</div></li>");
                 }
                 function loadAllEvents(){
-                    var fireref = firebase.database().ref(user.uid+'/daily');
-                    commentsRef.on('child_added', function(data) {
-                        addCommentElement(postElement, data.key, data.val().text, data.val().author);
+                    var fireref = firebase.database().ref('users/'+user.uid+'/daily');
+                    console.log("loading events")
+                    fireref.on('child_added', function(data) {
+                        console.log("added child")
+                        addListElement(data.key, data.val().name, data.val().description);
                     });
 
 
@@ -169,7 +159,7 @@
                 }
 
                 $(document).ready(function(){
-                    addListElement("hello", "konichiwa")
+                    loadAllEvents()
                     // $("form#main_input_box").submit(function(event){
                     //     event.preventDefault();
                     //     var button = "<div class='btn-group pull-right'><button class='complete btn btn-success'>Complete</button></div>";
@@ -198,7 +188,6 @@
             // No user is signed in.
             }
         });
-<<<<<<< HEAD
         function logOutButtonClick(){
             console.log("button")
             firebase.auth().signOut()
@@ -206,31 +195,6 @@
         function addListElement(text, description){
 
         }
-        $(document).ready(function(){
-
-
-            $("form#main_input_box").submit(function(event){
-                event.preventDefault();
-                var twoButtons = "<div class='btn-group pull-right'><button class='complete btn btn-success'>Complete</button></div>";
-                $(".list_of_items").append("<li class='list-group-item'>" + "<div class='text_holder'>" + $("#custom_textbox").val() + twoButtons + "</div></li>");
-                $("#custom_textbox").val('');
-            });
-
-            $(".list_of_items").on("click", "button.complete", function (){
-                var editItemBox = "<form class='edit_input_box'><input type='text' class='itembox'></form>";
-                var twoButtons = "<div class='btn-group pull-right' id='buttonGroup'><button class='complete btn btn-success'>Edit</button></div>";
-                $(this).closest("div.text_holder").replaceWith(editItemBox);
-                $("form.edit_input_box ").on("submit", function(){
-                    event.preventDefault(); 
-                    $(this).replaceWith("<div>" + $(".itembox").val() + twoButtons + "</div>");
-                }); 
-                
-
-            });
-        });
-=======
-        
->>>>>>> origin/master
 
     </script>
 
