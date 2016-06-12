@@ -53,7 +53,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <button id="log_out_btn" type="button" ng-click="logOutButtonClick()" class="btn btn-primary navbar-btn navbar-right">Log out</button>
+                        <button id="log_out_btn" type="button" onclick="logOutButtonClick()" class="btn btn-primary navbar-btn navbar-right">Log out</button>
                     </li>
                 </ul>
             </div>
@@ -77,6 +77,39 @@
 
     </div>
 
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+    <!-- User Scripts -->
+    <script type="text/javascript">
+        // Firebase Garbage
+        var config = {
+          apiKey: "AIzaSyC6MYsa-5z1bnFoE2xufHP8NLTb1rPk618",
+          authDomain: "h2o-grow.firebaseapp.com",
+          databaseURL: "https://h2o-grow.firebaseio.com",
+          storageBucket: "h2o-grow.appspot.com",
+        };
+        firebase.initializeApp(config);
+
+        var ref 
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+            // User is signed in.
+                ref = firebase.database().ref('users/' + userId)
+            
+            } else {
+                window.location.replace("index.html")
+            // No user is signed in.
+            }
+        });
+        function logOutButtonClick(){
+            console.log("button")
+            firebase.auth().signOut()
+        }
+    </script>
+
 </body>
+
+
 
 </html>
