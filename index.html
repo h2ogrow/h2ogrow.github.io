@@ -205,16 +205,77 @@
           storageBucket: "h2o-grow.appspot.com",
         };
         firebase.initializeApp(config);
-
+        var registering = false
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-            // User is signed in.
-            window.location.replace("portal.html")
+                // User is signed in.
+                if(registering){
+                    setUpAccount(user.uid)
+                }
+                setInterval(function(){
+                    window.location.replace("portal.html")
+                },3000)
             } else {
-            // No user is signed in.
+                // No user is signed in.
             }
         });
+
+        function setUpAccount(uid){
+            firebase.database().ref().child('users/'+uid).set({
+                daily:{
+                    '1':{
+                        complete:false,
+                        description:'Take a shorter shower! Aim for 5 minutes.',
+                        exp:10,
+                        name:'Rinse water plants'
+                    },
+                    '2':{
+                        complete:false,
+                        description:'Wash your fruits and veggies in a container! Use that water to water your plants.',
+                        exp:10,
+                        name: 'Rinse vegetables efficiently'
+                    },
+                    '3':{
+                        complete:false,
+                        description:"Check your shower head, older models dispense much more water",
+                        exp:20,
+                        name: 'Check shower head'
+                    },
+                    '4':{
+                        complete:false,
+                        description:"Wash dishes by hand, but don't let the water run",
+                        exp:10,
+                        name: 'Wash by hand'
+                    },
+                    '5':{
+                        
+                        complete:false,
+                        description:"Soak pots and pans instead of letting water run",
+                        exp:10,
+                        name: 'Soak pots'
+                    },
+                    '6':{
+                        complete:false,
+                        description:"Water plants in the early morning because of less evaporation.",
+                        exp:10,
+                        name: 'Water plants early'
+                    }
+                },
+                onetime:{
+                    '1':{
+                        description:"Rainwater harvesting is a great way to keep your plants hydrated without turning on the hose or sprinkler.",
+                        exp:10,
+                        name:'Install a rain barrel'
+                    },
+                    '2':{
+                        description:"Put a layer of mulch around trees and plants to absorb more moisture.",
+                        exp:50,
+                        name:"Add mulch to garden"
+                    }
+                }
+            })
+        }
         // End Firebase Garbage
 
         // Login/Register Modal Garbage
@@ -232,6 +293,7 @@
                     var $lg_email=$('#login_email').val();
                     var $lg_password=$('#login_password').val();
                     console.log("before firebase")
+                    registering = false
                     firebase.auth().signInWithEmailAndPassword($lg_email, $lg_password).catch(function(error) {
                         console.log("all up in dat firebase")
 
@@ -268,6 +330,7 @@
                     var $rg_repassword=$('#register_repassword').val();
 
                     if($rg_password == $rg_repassword){
+                        registering = true
                         firebase.auth().createUserWithEmailAndPassword($rg_email, $rg_password).catch(function(error){
                                 var errorCode = error.code;
                                 var errorMessage = error.message;
