@@ -137,7 +137,7 @@
                 var imgName = "plant" + randomImage+".png";
                 $("#current-plant").attr("src",imgName);
 
-                var expref = firebase.database().ref('users/' + user.uid + '/experience')
+                var expref = firebase.database().ref('users/' + user.uid + '/exp')
                 expref.on('value', function(snapshot){
                     animateExperience(snapshot.val())
                 })
@@ -148,6 +148,7 @@
                     var level = (experience/100) + 1
                     var expercent = 'width: ' + expnum + "%"
                     $('#expbar').attr('style', expercent)
+
                 }
                 
                 function addListElement(key, text, description){
@@ -190,7 +191,9 @@
                         deleted.remove();
                         experience += 20
                         console.log(experience)
-                        
+                        firebase.database().ref().child('users/' + user.uid).update({
+                            exp: experience
+                        })
 
                         firebase.database().ref().child('users/' + user.uid + '/daily/' + key).update({complete:true})
                         firebase.database().ref().child('users/' + user.uid + '/daily/' + key +'/exp').on('value', function(snapshot){
