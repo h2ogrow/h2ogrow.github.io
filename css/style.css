@@ -129,6 +129,21 @@
     text-decoration: none;
 }
 
+.btn-success.raised {
+    box-shadow: 0 3px 0 0 #007299;
+}
+
+.btn-success.raised:active, .btn-success.raised.active {
+    background: #33a6cc;
+    box-shadow: none;
+    margin-bottom: -3px;
+    margin-top: 3px;
+}
+
+.round {
+    border-radius: 5px;
+}
+
 .glyphicon {
     top: 0px;
 }
