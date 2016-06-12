@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="progress">
-            <div class="progress-bar progress-bar-info" id = "expbar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuema"100">
+            <div class="progress-bar progress-bar-info" id = "expbar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuema"100"> 
             </div>
         </div>
     </div>
@@ -146,10 +146,11 @@
                 function animateExperience(num){
                     experience = num
                     var expnum = experience%100
-                    var level = (experience/100) + 1
+                    var level = Math.floor(experience/100) + 1
                     var expercent = 'width: ' + expnum + "%"
                     $('#expbar').attr('style', expercent)
-
+                    $('div#expbar').text((100-expnum) + " exp to lvl " + (level+1))
+           
                 }
                 
                 function addListElement(key, text, description){
@@ -188,7 +189,6 @@
                         var deleted = $(this).closest("li")
                         key = deleted.attr('key')
                         deleted.remove();
-                        experience += 20
                         console.log(experience)
                         firebase.database().ref().child('users/' + user.uid).update({
                             exp: experience
