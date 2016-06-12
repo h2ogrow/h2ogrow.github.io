@@ -116,9 +116,14 @@
     <!-- User Scripts -->
     <script type="text/javascript">
         
+<<<<<<< HEAD
         
         var experience = 0;
         var level = 0;
+=======
+        var experience = 20
+
+>>>>>>> origin/master
         // Firebase Garbage
         var config = {
           apiKey: "AIzaSyC6MYsa-5z1bnFoE2xufHP8NLTb1rPk618",
@@ -144,19 +149,24 @@
                 function addListElement(key, text, description){
                     var doc = $(document)
                     var button = "<div class='btn-group pull-right'><button class='complete btn btn-success'>Complete</button></div>";
-                    doc.find('.list_of_items').append("<li class='list-group-item'>" + "<div class='text_holder' key='" + key + "'>" + text + button + "</div></li>");
+                    doc.find('.list_of_items').append("<li class='list-group-item' key='" + key + "'>" + "<div class='text_holder'>" + text + button + "</div></li>");
                 }
                 function loadAllEvents(){
                     var fireref = firebase.database().ref('users/'+user.uid+'/daily');
                     console.log("loading events")
                     fireref.on('child_added', function(data) {
                         console.log("added child")
-                        addListElement(data.key, data.val().name, data.val().description);
+                        if(!data.val().complete){
+                            addListElement(data.key, data.val().name, data.val().description);
+                        }else{
+                            console.log('event complete')
+                        }
                     });
 
 
                 }
                 function onEventComplete(){
+<<<<<<< HEAD
                     if(experience == 100){ 
                         experience = 0; 
                         level++;
@@ -165,6 +175,9 @@
                         experience += 20; 
                     var expPercent = "width: " + experience + "%";
                     $("#expbar").attr("style", expPercent)
+=======
+                    console.log("just ran")
+>>>>>>> origin/master
                 }
 
                 $(document).ready(function(){
@@ -179,11 +192,14 @@
 
                     $(".list_of_items").on("click", "button.complete", function (){
                         var eventnum = 1
-                       
-                        $(this).closest("li").remove();
-                        firebase.database().ref().child('user').child(user.uid+'').child('complete').update('true')
+                        var deleted = $(this).closest("li")
+                        key = deleted.attr('key')
+                        deleted.remove();
+                        experience += 20
+                        console.log(experience)
+                        
 
-                        firebase.database().ref().child('user').child(user.uid+'').child('event').child('daily').child(eventnum+'')
+                        firebase.database().ref().child('users/' + user.uid + '/daily/' + key).update({complete:true})
                         onEventComplete()
                         
                         // Change to completed in Firebase
