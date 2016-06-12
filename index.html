@@ -184,6 +184,11 @@
 
     <!-- User Scripts -->
     <script type="text/javascript">
+
+
+
+
+
         // Firebase Garbage
         var config = {
           apiKey: "AIzaSyC6MYsa-5z1bnFoE2xufHP8NLTb1rPk618",
@@ -258,12 +263,12 @@
                         firebase.auth().createUserWithEmailAndPassword($rg_email, $rg_password).catch(function(error){
                                 var errorCode = error.code;
                                 var errorMessage = error.message;
-                                console.log(errorCode)
-                                console.log(errorMessage)
+
                                 if (errorMessage) {
                                     msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "error", "glyphicon-remove", errorMessage);
                                 } else {
                                     msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "success", "glyphicon-ok", "Register OK");
+                                    
                                 }
                             }
                         )
