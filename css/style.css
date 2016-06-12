@@ -1,12 +1,3 @@
-/* #####################################################################
-   #
-   #   Project       : Modal Login with jQuery Effects
-   #   Author        : Rodrigo Amarante (rodrigockamarante)
-   #   Version       : 1.0
-   #   Created       : 07/28/2015
-   #   Last Change   : 08/02/2015
-   #
-   ##################################################################### */
    
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 
@@ -152,6 +143,9 @@
 .add_button {
     margin: 10px 0px 10px 0px;
 }
+.edit {
+    margin-top: -7px;
+}
 .checkbox {
     margin-top: 20px;
 }
@@ -177,5 +171,15 @@ body {
     border-radius: 5px;
     width: 50%;
     border: 1px solid #545454;
+}
+#img_logo {
+    display:block;
+    float:left;
+    margin-top: 8px;
+    margin-right: 10px;
+    bottom:0px;
+}
+.navbar-brand {
+    display:block;
 }
 
